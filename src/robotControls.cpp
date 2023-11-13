@@ -1,5 +1,5 @@
 #include "deliveryRobot.hpp"
-// moveDist() does not block
+// all functions here block
 void moveDist(double dist){
 	allMotors.tare_position();
 	allMotors.move_absolute(dist/GEAR_DIAMETER*360,100);
@@ -14,7 +14,6 @@ void moveDist(double dist){
 	}
 	allMotors.brake();
 }
-// all turn functions block
 void turn90(bool right){
 	gyro.reset(true);
 	while(gyro.get_heading()<right?90-ANGLE_ERR:-90+ANGLE_ERR || gyro.get_heading()>right?90+ANGLE_ERR:-90-ANGLE_ERR){
