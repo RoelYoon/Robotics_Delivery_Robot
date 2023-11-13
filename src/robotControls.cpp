@@ -1,5 +1,6 @@
 #include "deliveryRobot.hpp"
 // all functions here block
+// all units are still in cm or degrees
 void moveDist(double dist){
 	allMotors.tare_position();
 	allMotors.move_absolute(dist/GEAR_DIAMETER*360,100);
