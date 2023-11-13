@@ -1,5 +1,5 @@
 #include "deliveryRobot.hpp"
-// EXTERNAL variable definitions
+// EXTERNAL variable definitions. These are global to all linked files.
 const int dirX[4] = {0,1,0,-1};
 const int dirY[4] = {1,0,-1,0};
 Map virtualMap;
