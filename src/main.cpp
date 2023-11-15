@@ -26,6 +26,8 @@ void opcontrol(){
 		setDestination();
 		if(destination!=-1){
 			while(true){
+				pros::lcd::set_text(1, "Heading to destination "+std::to_string(destination-1));
+				pros::lcd::set_text(2, "Delivery on the way!");
 				try{
 					followPath(getDeliveryPath());
 					break;
