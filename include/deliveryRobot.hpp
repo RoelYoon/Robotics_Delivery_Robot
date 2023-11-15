@@ -14,28 +14,12 @@
 #define BUMPER_L_PORT 9
 #define BUMPER_R_PORT 10
 //units are in cm or degrees
-#define UNIT_DIST (6.35 * 5 + 2*2)
+#define UNIT_DIST (6.35 * 4 + 2*2)
 #define GEAR_DIAMETER 5
 #define UNIT_ROTATION (UNIT_DIST/GEAR_DIAMETER * 360)
 #define ANGLE_ERR 0.1
 #define MAX_R (1000/(int)UNIT_DIST)
 #define MAX_C (235/(int)UNIT_DIST)
-
-// external variable declarations
-extern const int dirX[4];
-extern const int dirY[4];
-extern Map virtualMap;
-extern Position robotPos;
-extern int robotDir;
-extern int destination;
-extern pros::Controller master;
-extern pros::Imu gyro;
-extern pros::Distance distSensor;
-extern pros::ADIDigitalIn leftBumper;
-extern pros::ADIDigitalIn rightBumper;
-extern pros::Motor_Group leftMotors;
-extern pros::Motor_Group rightMotors;
-extern pros::Motor_Group allMotors;
 
 // virtual map stuff
 class Map{
@@ -87,4 +71,20 @@ struct Node{
 };
 std::shared_ptr<Node> getDeliveryPath(void);
 void followPath(std::shared_ptr<Node> pathHead);
+
+// external variable declarations
+extern const int dirX[4];
+extern const int dirY[4];
+extern Map virtualMap;
+extern Position robotPos;
+extern int robotDir;
+extern int destination;
+extern pros::Controller master;
+extern pros::Imu gyro;
+extern pros::Distance distSensor;
+extern pros::ADIDigitalIn leftBumper;
+extern pros::ADIDigitalIn rightBumper;
+extern pros::Motor_Group leftMotors;
+extern pros::Motor_Group rightMotors;
+extern pros::Motor_Group allMotors;
 #endif
