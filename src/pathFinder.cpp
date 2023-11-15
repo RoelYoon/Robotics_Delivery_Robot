@@ -14,9 +14,9 @@ bool Node::operator==(const Position &other){
   destination, and the tail is the current robot's position).
 */
 std::shared_ptr<Node> getDeliveryPath(void){
-	bool visited[MAX_R][MAX_C]={}; 
+	bool visited[MAX_R][MAX_C]={};
 	std::queue<std::shared_ptr<Node>> bfsQ; 
-	bfsQ.push(std::shared_ptr<Node>(new Node(Position(robotPos.row,robotPos.col))));
+	bfsQ.push(std::make_shared<Node>(Node(Position(robotPos.row,robotPos.col))));
 	while(!bfsQ.empty()){
 		std::shared_ptr<Node> cur = bfsQ.front(); 
 		visited[(*cur).pos.row][(*cur).pos.col]=1; 
@@ -28,7 +28,7 @@ std::shared_ptr<Node> getDeliveryPath(void){
 			int nextCol = (*cur).pos.col + dirX[i];
 			//bounds check, visited check, obstacle check
 			if(nextRow>=0 && nextRow<MAX_R && nextCol>=0 && nextCol<MAX_C && visited[nextRow][nextCol]==0 && virtualMap[nextRow][nextCol]!=-1){
-				bfsQ.push(std::make_shared<Node>(new Node(Position(nextRow,nextCol),cur)));
+				bfsQ.push(std::make_shared<Node>(Node(Position(nextRow,nextCol),cur)));
 			}
 		}
 		bfsQ.pop();
