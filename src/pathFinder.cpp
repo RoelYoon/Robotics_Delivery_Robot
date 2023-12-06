@@ -13,25 +13,28 @@ bool Node::operator==(const Position &other){
   of Nodes that represents the delivery path (the head is the node at the
   destination, and the tail is the current robot's position).
 */
-std::shared_ptr<Node> getDeliveryPath(void){
+std::shared_ptr<Node> getDeliveryPath(){
 	bool visited[MAX_R][MAX_C]={};
-	std::queue<std::shared_ptr<Node>> bfsQ; 
+	std::queue<std::shared_ptr<Node>> bfsQ;
 	bfsQ.push(std::make_shared<Node>(Node(Position(robotPos.row,robotPos.col))));
+	visited[robotPos.row][robotPos.col]=1;
 	while(!bfsQ.empty()){
-		std::shared_ptr<Node> cur = bfsQ.front(); 
-		visited[(*cur).pos.row][(*cur).pos.col]=1; 
-		if(virtualMap[(*cur).pos.row][(*cur).pos.row]==destination){
+		std::shared_ptr<Node> cur = bfsQ.front();
+		visited[cur->pos.row][cur->pos.col]=1;
+		if(virtualMap[cur->pos.row][cur->pos.col]==destination){
 			return cur;
 		}
 		for(int i = 0; i < 4; i++){
-			int nextRow = (*cur).pos.row + dirY[i];
-			int nextCol = (*cur).pos.col + dirX[i];
+			int nextRow = cur->pos.row + dirY[i];
+			int nextCol = cur->pos.col + dirX[i];
 			//bounds check, visited check, obstacle check
 			if(nextRow>=0 && nextRow<MAX_R && nextCol>=0 && nextCol<MAX_C && visited[nextRow][nextCol]==0 && virtualMap[nextRow][nextCol]!=-1){
+				visited[nextRow][nextCol]=1;
 				bfsQ.push(std::make_shared<Node>(Node(Position(nextRow,nextCol),cur)));
 			}
 		}
 		bfsQ.pop();
+		pros::delay(2);
 	}
 	throw NoPathFound();
 }
@@ -48,23 +51,29 @@ void followPath(std::shared_ptr<Node> pathHead){
 			targetDirection=i; 
 	turn(targetDirection);
 	//distance sensor check
-	if(distSensor.get() <= UNIT_DIST){
-		virtualMap.mark(pathHead->pos.row,pathHead->pos.col,1);
-		throw ObstacleFound();
+	for(int i = 0; i < 10; i++){
+		if(distSensor.get() <= UNIT_DIST*10){
+			virtualMap.mark(pathHead->pos.row,pathHead->pos.col,1);
+			throw ObstacleFound();
+		}
+		pros::delay(2);
 	}
 	//moves while checking bumper sensors
 	allMotors.tare_position();
 	allMotors.move_absolute(UNIT_ROTATION,100);
+	/*
 	while(!((allMotors.get_positions()[0] < UNIT_ROTATION + ANGLE_ERR) && (allMotors.get_positions()[0] > UNIT_ROTATION-ANGLE_ERR))){
 		if(leftBumper.get_new_press() || rightBumper.get_new_press()){
 			allMotors.move_absolute(0,-100);
 			while(!((allMotors.get_positions()[0] < ANGLE_ERR) && (allMotors.get_positions()[0] > -ANGLE_ERR))){
-				pros::delay(10); //blocks until position is back to 0
+				pros::delay(2); //blocks until position is back to 0
 			}
 			allMotors.brake();
 			virtualMap.mark(pathHead->pos.row,pathHead->pos.col,1);
 			throw ObstacleFound();
 		}
-	}
+		pros::delay(2);
+	}*/
 	allMotors.brake();
+	pros::delay(2);
 }
