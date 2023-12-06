@@ -19,9 +19,9 @@ void moveDist(double dist){
 }*/
 void turn90(bool right){
 	gyro.reset(true);
-	while(gyro.get_heading()<right?90-ANGLE_ERR:-90+ANGLE_ERR || gyro.get_heading()>right?90+ANGLE_ERR:-90-ANGLE_ERR){
-		leftMotors.move(right?100:-100);
-		rightMotors.move(right?-100:100);
+	while(!(gyro.get_heading()>90-ANGLE_ERR && gyro.get_heading()<90+ANGLE_ERR)){
+		leftMotors.move(right?-40:40);
+		rightMotors.move(right?-40:40);
 		pros::delay(2);
 	}
 	leftMotors.brake();
