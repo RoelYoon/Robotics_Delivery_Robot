@@ -40,7 +40,6 @@ void opcontrol(){
 				}catch(ObstacleFound &e){
 					pros::lcd::set_text(1, e.what());
 					pros::lcd::set_text(2, "Recalculating path...");
-					pros::delay(1000);
 				}catch(...){
 					//prints to PROS terminal when connected to computer
 					fprintf(stderr, std::to_string(errno).c_str());
