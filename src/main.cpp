@@ -51,9 +51,3 @@ void opcontrol(){
 		pros::delay(2);
 	}
 }
-/*
-- does not exit or crash
-- no infinite loops
-- no errors
-- no exceptions thrown
-*/
