@@ -58,9 +58,16 @@ void followPath(std::shared_ptr<Node> pathHead){
 		}
 		pros::delay(2);
 	}
-	//moves while checking bumper sensors
-	allMotors.tare_position();
-	allMotors.move_absolute(UNIT_ROTATION,100);
+	//moves a unit
+	leftMotors.tare_position();
+	rightMotors.tare_position();
+	leftMotors.move_relative(UNIT_ROTATION,40);
+	rightMotors.move_relative(-UNIT_ROTATION,40);
+	while(!((leftMotors.get_positions()[0] < UNIT_ROTATION + ANGLE_ERR) && (leftMotors.get_positions()[0] > UNIT_ROTATION-ANGLE_ERR))){
+		pros::delay(2);
+	}
+	robotPos.row+=dirY[robotDir];
+	robotPos.col+=dirX[robotDir];
 	/*
 	while(!((allMotors.get_positions()[0] < UNIT_ROTATION + ANGLE_ERR) && (allMotors.get_positions()[0] > UNIT_ROTATION-ANGLE_ERR))){
 		if(leftBumper.get_new_press() || rightBumper.get_new_press()){

@@ -34,8 +34,11 @@ void turn(int targetDir){
 	allMotors.brake();
 	if(reps==3){
 		turn90(0);
+		robotDir=(robotDir+1)%4;
 		return;
 	}
-	for(int i = 0; i < reps; i++)
+	for(int i = 0; i < reps; i++){
 		turn90(1);
+		robotDir=(robotDir-1)<0?3:robotDir-1;
+	}
 }
