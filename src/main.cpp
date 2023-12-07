@@ -16,7 +16,6 @@ pros::Motor_Group rightMotors=pros::Motor_Group({-MOTOR_R1_PORT,-MOTOR_R2_PORT})
 // This function is called as soon as the program is started.
 void initialize(){
 	pros::lcd::initialize();
-	gyro.reset(true);
 	initializeMap(virtualMap);
 }
 // This function will run immediately following initialize().
