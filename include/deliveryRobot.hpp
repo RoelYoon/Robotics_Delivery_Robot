@@ -16,7 +16,7 @@
 #define UNIT_DIST (6.35 * 4 + 2*2)
 #define GEAR_DIAMETER 5
 #define UNIT_ROTATION (UNIT_DIST/GEAR_DIAMETER * 360)
-#define ANGLE_ERR 3
+#define ANGLE_ERR 2
 #define MAX_R (1000/(int)UNIT_DIST)
 #define MAX_C (235/(int)UNIT_DIST)
 // virtual map stuff
