@@ -13,7 +13,6 @@ pros::Distance distSensor=pros::Distance(DIST_PORT);
 //pros::ADIDigitalIn rightBumper=pros::ADIDigitalIn(BUMPER_R_PORT);
 pros::Motor_Group leftMotors=pros::Motor_Group({-MOTOR_L1_PORT,-MOTOR_L2_PORT});
 pros::Motor_Group rightMotors=pros::Motor_Group({-MOTOR_R1_PORT,-MOTOR_R2_PORT});
-pros::Motor_Group allMotors=pros::Motor_Group({-MOTOR_L1_PORT,-MOTOR_L2_PORT,-MOTOR_R1_PORT,-MOTOR_R2_PORT});
 // This function is called as soon as the program is started.
 void initialize(){
 	pros::lcd::initialize();
