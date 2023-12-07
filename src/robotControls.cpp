@@ -31,7 +31,6 @@ void turn(int targetDir){
 	static const int rotationMap[4] = {0,3,2,1};
 	int reps = rotationMap[targetDir>robotDir?4+(robotDir-targetDir)%4:(robotDir-targetDir)%4];
 	// 270 degree turn == -90 degree turn. For optimization.
-	allMotors.brake();
 	if(reps==3){
 		turn90(0);
 		robotDir=(robotDir+1)%4;

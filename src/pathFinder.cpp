@@ -81,6 +81,5 @@ void followPath(std::shared_ptr<Node> pathHead){
 		}
 		pros::delay(2);
 	}*/
-	allMotors.brake();
 	pros::delay(2);
 }

@@ -86,5 +86,4 @@ extern pros::Distance distSensor;
 //extern pros::ADIDigitalIn rightBumper;
 extern pros::Motor_Group leftMotors;
 extern pros::Motor_Group rightMotors;
-extern pros::Motor_Group allMotors;
 #endif
