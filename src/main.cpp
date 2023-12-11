@@ -51,13 +51,9 @@ void opcontrol(){
 			}
 		}
 		destination=-1;
-		if(master.get_digital(DIGITAL_L1)){
-			capMotors.move(-40);
-		}else if(master.get_digital(DIGITAL_R1)){
-			capMotors.move(40);
-		}else{
-			capMotors.brake();
-		}
+		if(master.get_digital(DIGITAL_L1)){capMotors.move(-40);}
+		else if(master.get_digital(DIGITAL_R1)){capMotors.move(40);}
+		else{capMotors.brake();}
 		pros::delay(2);
 	}
 }
