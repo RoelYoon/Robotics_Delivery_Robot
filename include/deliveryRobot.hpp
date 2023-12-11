@@ -13,12 +13,13 @@
 //#define BUMPER_L_PORT 1
 //#define BUMPER_R_PORT 2
 //units are in cm or degrees
-#define UNIT_DIST (6.35 * 4 + 2*2)
+//old unit dist — (6.35 * 4 + 2*2)
+#define UNIT_DIST 15
 #define GEAR_DIAMETER 5
 #define UNIT_ROTATION (UNIT_DIST/GEAR_DIAMETER * 360)
 #define ANGLE_ERR 0.5
-#define MAX_R 500
-#define MAX_C 500
+#define MAX_R 50
+#define MAX_C 50
 // virtual map stuff
 class Map{
 private:
@@ -40,8 +41,8 @@ struct Position{
     int col;
     Position(int r, int c);
 };
+void tareRobot();
 void setDestination();
-void initializeMap(Map &map);
 
 // custom exceptions
 class ObstacleFound : public std::exception{
@@ -59,6 +60,7 @@ class NoPathFound : public std::exception{
 void moveDist(double dist);
 void turn90(bool right);
 void turn(int targetDir);
+void moveCap(bool open);
 
 // Path finding stuff
 struct Node{
@@ -86,4 +88,5 @@ extern pros::Distance distSensor;
 //extern pros::ADIDigitalIn rightBumper;
 extern pros::Motor_Group leftMotors;
 extern pros::Motor_Group rightMotors;
+extern pros::Motor_Group capMotors;
 #endif

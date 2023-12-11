@@ -41,3 +41,9 @@ void turn(int targetDir){
 		turn90(1);
 	}
 }
+/*
+void moveCap(bool open){
+	static const int gap = 20;
+	capMotors.tare_position();
+	capMotors.move_relative(open?gap:-gap,40);
+}*/

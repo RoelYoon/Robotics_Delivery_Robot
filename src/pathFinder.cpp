@@ -28,12 +28,13 @@ std::shared_ptr<Node> getDeliveryPath(){
 			int nextRow = cur->pos.row + dirY[i];
 			int nextCol = cur->pos.col + dirX[i];
 			//bounds check, visited check, obstacle check
-			if(nextRow>=0 && nextRow<MAX_R && nextCol>=0 && nextCol<MAX_C && visited[nextRow][nextCol]==0 && virtualMap[nextRow][nextCol]!=-1){
+			if(nextRow>=0 && nextRow<MAX_R && nextCol>=0 && nextCol<MAX_C && visited[nextRow][nextCol]==0 && virtualMap[nextRow][nextCol]!=1){
 				visited[nextRow][nextCol]=1;
 				bfsQ.push(std::make_shared<Node>(Node(Position(nextRow,nextCol),cur)));
 			}
 		}
 		bfsQ.pop();
+		fprintf(stderr, std::to_string(errno).c_str());
 		pros::delay(2);
 	}
 	throw NoPathFound();
@@ -49,12 +50,12 @@ void followPath(std::shared_ptr<Node> pathHead){
 	for(int i = 0; i < 4; i++)
 		if(robotPos.row+dirY[i]==pathHead->pos.row && robotPos.col+dirX[i]==pathHead->pos.col)
 			targetDirection=i; 
-	//fprintf(stderr, std::to_string(robotDir).c_str());
 	turn(targetDirection);
 	//distance sensor check
 	for(int i = 0; i < 10; i++){
 		if(distSensor.get() <= UNIT_DIST*10){
 			virtualMap.mark(pathHead->pos.row,pathHead->pos.col,1);
+			fprintf(stderr, (std::to_string(pathHead->pos.row)+","+std::to_string(pathHead->pos.col)+"\n").c_str());
 			throw ObstacleFound();
 		}
 		pros::delay(2);
@@ -62,9 +63,9 @@ void followPath(std::shared_ptr<Node> pathHead){
 	//moves a unit
 	leftMotors.tare_position();
 	rightMotors.tare_position();
-	leftMotors.move_relative(UNIT_ROTATION,50);
-	rightMotors.move_relative(-UNIT_ROTATION,50);
-	while(!((leftMotors.get_positions()[0] < UNIT_ROTATION + ANGLE_ERR) && (leftMotors.get_positions()[0] > UNIT_ROTATION-ANGLE_ERR))){
+	leftMotors.move_relative(UNIT_ROTATION,40);
+	rightMotors.move_relative(-UNIT_ROTATION,40);
+	while(!((leftMotors.get_positions()[0] < UNIT_ROTATION + 5) && (leftMotors.get_positions()[0] > UNIT_ROTATION-5))){
 		pros::delay(2);
 	}
 	robotPos.row+=dirY[robotDir];
