@@ -19,7 +19,8 @@ void moveDist(double dist){
 }*/
 void turn90(bool right){
 	gyro.reset(true);
-	while(right?!(gyro.get_heading()>90-ANGLE_ERR && gyro.get_heading()<90+ANGLE_ERR):!(gyro.get_heading()<-90+ANGLE_ERR && gyro.get_heading()>-90-ANGLE_ERR)){
+	pros::delay(500);
+	while(right?!(gyro.get_heading()>90-ANGLE_ERR && gyro.get_heading()<90+ANGLE_ERR):!(gyro.get_heading()<270+ANGLE_ERR && gyro.get_heading()>270-ANGLE_ERR)){
 		leftMotors.move(right?-40:40);
 		rightMotors.move(right?-40:40);
 		pros::delay(2);
@@ -28,16 +29,15 @@ void turn90(bool right){
 	rightMotors.brake();
 }
 void turn(int targetDir){
-	static const int rotationMap[4] = {0,3,2,1};
-	int reps = rotationMap[targetDir>robotDir?4+(robotDir-targetDir)%4:(robotDir-targetDir)%4];
+	//static const int rotationMap[4] = {0,3,2,1};
+	int reps = targetDir>=robotDir?(targetDir-robotDir):(4+(targetDir-robotDir)); //rotationMap[targetDir>robotDir?4+(robotDir-targetDir)%4:(robotDir-targetDir)%4];
 	// 270 degree turn == -90 degree turn. For optimization.
+	robotDir=targetDir;
 	if(reps==3){
 		turn90(0);
-		robotDir=(robotDir+1)%4;
 		return;
 	}
 	for(int i = 0; i < reps; i++){
 		turn90(1);
-		robotDir=(robotDir-1)<0?3:robotDir-1;
 	}
 }

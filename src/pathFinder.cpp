@@ -1,6 +1,6 @@
 #include "deliveryRobot.hpp"
 // Node struct definitions
-Node::Node(Position p):pos(p),parent(this){}
+Node::Node(Position p):pos(p),parent(nullptr){}
 Node::Node(Position p, std::shared_ptr<Node> n):pos(p),parent(n){}
 bool Node::operator==(const Node &other){
 	return (other.pos.row==pos.row && other.pos.col==pos.col);
@@ -45,10 +45,11 @@ std::shared_ptr<Node> getDeliveryPath(){
 void followPath(std::shared_ptr<Node> pathHead){
 	if(*pathHead==robotPos){return;}
 	followPath(pathHead->parent);
-	int targetDirection;
+	int targetDirection=0;
 	for(int i = 0; i < 4; i++)
-		if(pathHead->pos.row-robotPos.row == dirY[i] && pathHead->pos.col-robotPos.col == dirX[i])
+		if(robotPos.row+dirY[i]==pathHead->pos.row && robotPos.col+dirX[i]==pathHead->pos.col)
 			targetDirection=i; 
+	//fprintf(stderr, std::to_string(robotDir).c_str());
 	turn(targetDirection);
 	//distance sensor check
 	for(int i = 0; i < 10; i++){
@@ -61,8 +62,8 @@ void followPath(std::shared_ptr<Node> pathHead){
 	//moves a unit
 	leftMotors.tare_position();
 	rightMotors.tare_position();
-	leftMotors.move_relative(UNIT_ROTATION,40);
-	rightMotors.move_relative(-UNIT_ROTATION,40);
+	leftMotors.move_relative(UNIT_ROTATION,50);
+	rightMotors.move_relative(-UNIT_ROTATION,50);
 	while(!((leftMotors.get_positions()[0] < UNIT_ROTATION + ANGLE_ERR) && (leftMotors.get_positions()[0] > UNIT_ROTATION-ANGLE_ERR))){
 		pros::delay(2);
 	}

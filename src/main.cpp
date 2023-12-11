@@ -3,9 +3,9 @@
 const int dirX[4] = {0,1,0,-1};
 const int dirY[4] = {1,0,-1,0};
 Map virtualMap;
-Position robotPos=Position(5,0);
 int robotDir=0;
 int destination=-1;
+Position robotPos=Position(MAX_R/2,MAX_C/2);
 pros::Controller master=pros::Controller(pros::E_CONTROLLER_MASTER);
 pros::Imu gyro=pros::Imu(IMU_PORT);
 pros::Distance distSensor=pros::Distance(DIST_PORT);
@@ -30,6 +30,7 @@ void opcontrol(){
 					followPath(getDeliveryPath());
 					pros::lcd::set_text(1, "Delivery Successful!");
 					pros::lcd::set_text(2, "Choose another destination");
+					pros::delay(100);
 					break;
 				}catch(NoPathFound &e){
 					pros::lcd::set_text(1, e.what());
@@ -42,7 +43,6 @@ void opcontrol(){
 					//prints to PROS terminal when connected to computer
 					fprintf(stderr, std::to_string(errno).c_str());
 				}
-				pros::delay(2);
 			}
 		}
 		destination=-1; 

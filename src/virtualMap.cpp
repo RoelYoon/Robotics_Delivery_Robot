@@ -38,5 +38,5 @@ void setDestination(){
    be done dynamically during run-time. 
 */
 void initializeMap(Map &map){
-    map.mark(1,1,0); //destination #1
+    map.mark(10,4,0); //destination #1
 }
