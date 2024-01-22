@@ -53,7 +53,7 @@ void followPath(std::shared_ptr<Node> pathHead){
 	turn(targetDirection);
 	//distance sensor check
 	for(int i = 0; i < 10; i++){
-		if(distSensor.get() <= UNIT_DIST*10){
+		if(distSensor.get() <= UNIT_DIST*14){
 			virtualMap.mark(pathHead->pos.row,pathHead->pos.col,1);
 			fprintf(stderr, (std::to_string(pathHead->pos.row)+","+std::to_string(pathHead->pos.col)+"\n").c_str());
 			throw ObstacleFound();
